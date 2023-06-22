@@ -90,32 +90,38 @@
             </button>
           </form>
           <!-- Registration Form -->
-          <form v-show="tab === 'register'">
+          <vee-form v-show="tab === 'register'" :validation-schema="schema">
             <!-- Name -->
             <div class="mb-3">
               <label class="inline-block mb-2">Name</label>
-              <input
+              <vee-field
                 type="text"
+                name="name"
                 class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
                 placeholder="Enter Name"
               />
+              <ErrorMessage class="text-red-600" name="name" />
             </div>
             <!-- Email -->
-            <div class="mb-3">
+            <div class="mb-3" :validation-schema="schema">
               <label class="inline-block mb-2">Email</label>
-              <input
+              <vee-field
                 type="email"
+                name="email"
                 class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
                 placeholder="Enter Email"
               />
+              <ErrorMessage class="text-red-600" name="email" />
             </div>
             <!-- Age -->
             <div class="mb-3">
               <label class="inline-block mb-2">Age</label>
-              <input
+              <vee-field
                 type="number"
+                name="age"
                 class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
               />
+              <ErrorMessage class="text-red-600" name="age" />
             </div>
             <!-- Password -->
             <div class="mb-3">
@@ -160,7 +166,7 @@
             >
               Submit
             </button>
-          </form>
+          </vee-form>
         </div>
       </div>
     </div>
@@ -169,10 +175,20 @@
 
 <script setup>
 import { useModalStore } from "@/stores/modal";
+import { ErrorMessage } from "vee-validate";
 import { ref } from "vue";
 
 const modalStore = useModalStore();
 const tab = ref("login");
+const schema = ref({
+  name: "required|min:3|max:100|alpha_spaces",
+  email: "required|min:3|max:100|email",
+  age: "required|min_value:18|max_value:200",
+  password: "",
+  confirm_password: "",
+  country: "",
+  tos: "",
+});
 </script>
 
 <!-- <script>
